@@ -8,10 +8,19 @@ public class Pedido implements Serializable {
     private Cliente cliente;
     private ArrayList<Prato> pratos;
     private Calendar hora;
+    private Integer numero;
     private String obs;
 
     public Pedido () {
 
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public String getObs() {
@@ -19,7 +28,7 @@ public class Pedido implements Serializable {
     }
 
     public void setObs(String obs) {
-        this.obs = obs;
+        this.obs = obs; 
     }
 
     public Cliente getCliente() {

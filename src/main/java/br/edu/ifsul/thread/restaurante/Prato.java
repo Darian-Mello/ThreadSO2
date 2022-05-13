@@ -4,12 +4,21 @@ import java.io.Serializable;
 
 public class Prato implements Serializable {
     private String nome;
-    private String modoPreparo;
+    private Integer tempoPreparo;
     private String ingredientes;
     private Double Preco;
+    private Integer numero;
 
     public Prato () {
 
+    }
+
+    public Integer getTempoPreparo() {
+        return tempoPreparo;
+    }
+
+    public void setTempoPreparo(Integer tempoPreparo) {
+        this.tempoPreparo = tempoPreparo;
     }
 
     public String getNome() {
@@ -18,14 +27,6 @@ public class Prato implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getModoPreparo() {
-        return modoPreparo;
-    }
-
-    public void setModoPreparo(String modoPreparo) {
-        this.modoPreparo = modoPreparo;
     }
 
     public String getIngredientes() {
@@ -42,5 +43,13 @@ public class Prato implements Serializable {
 
     public void setPreco(Double preco) {
         Preco = preco;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 }
