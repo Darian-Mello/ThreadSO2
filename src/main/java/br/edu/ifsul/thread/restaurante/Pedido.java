@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Pedido implements Serializable {
-    private Cliente cliente;
+    private Cozinheiro cliente;
     private ArrayList<Prato> pratos;
     private Calendar hora;
     private Integer numero;
-    private String obs;
 
     public Pedido () {
 
@@ -23,19 +22,11 @@ public class Pedido implements Serializable {
         this.numero = numero;
     }
 
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs; 
-    }
-
-    public Cliente getCliente() {
+    public Cozinheiro getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Cozinheiro cliente) {
         this.cliente = cliente;
     }
 

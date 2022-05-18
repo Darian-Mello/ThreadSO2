@@ -5,15 +5,19 @@ import java.util.concurrent.BlockingQueue;
 public class Main {
     public static void main(String[] args) {
         BlockingQueue<Pedido> pedidos = new ArrayBlockingQueue<>(2);
-        Boolean pedidosSendoFeitos = true;
 
-        ProdutorPedidos produtor = new ProdutorPedidos(pedidos, pedidosSendoFeitos);
-        ConsumidorPedidos consumidor = new ConsumidorPedidos(pedidos, pedidosSendoFeitos);
-        //ConsumidorPedidos consumidor2 = new ConsumidorPedidos(pedidos, pedidosSendoFeitos);
+        ProdutorPedidos produtor = new ProdutorPedidos(pedidos);
+
+        Cozinheiro c = new Cozinheiro();
+        c.setNome("Pedro");
+        ConsumidorPedidos consumidor = new ConsumidorPedidos(c, pedidos);
+        c = new Cozinheiro();
+        c.setNome("Carlos");
+        ConsumidorPedidos consumidor2 = new ConsumidorPedidos(c, pedidos);
 
         produtor.start();
         consumidor.start();
-        //consumidor2.start();
+        consumidor2.start();
 
     }
 }

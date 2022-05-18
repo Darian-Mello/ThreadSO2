@@ -5,11 +5,10 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConsumidorPedidos extends Thread {
     private BlockingQueue pedidos = null;
-    private Boolean pedidosSendoFeitos = false;
 
-    public ConsumidorPedidos(BlockingQueue pedidos, Boolean pedidosSendoFeitos) {
+    public ConsumidorPedidos(Cozinheiro cozinheiro, BlockingQueue pedidos) {
+        super(cozinheiro.getNome());
         this.pedidos = pedidos;
-        this.pedidosSendoFeitos = pedidosSendoFeitos;
     }
 
     @Override
@@ -17,22 +16,25 @@ public class ConsumidorPedidos extends Thread {
         try {
             Pedido p;
             while (true) {
-                if (!this.pedidosSendoFeitos && pedidos.isEmpty()) {
-                    System.out.println("saiu");
-                    break;
+                System.out.println("\nCozinheiro " + this.getName() + " aguardando um pedido.");
+                p = (Pedido) pedidos.take();
+                System.out.println("\nFila de pedidos: " + pedidos);
+                if (p.getNumero() == 0) {
+                    System.out.println("\nCozinheiro " + this.getName() + " encerrou os trabalhos.");
+                    pedidos.put(p);
+                    return;
                 }
 
-                p = new Pedido();
-                System.out.println("esperando");
-                p = (Pedido) pedidos.take();
                 Integer tempoPreparo = 0;
-
                 for (Prato prato:p.getPratos()) {
                     tempoPreparo += prato.getTempoPreparo();
                 }
-                System.out.println("Pedido " + p.getNumero() + " sendo feito!" );
+
+                System.out.println("\nPedido nº" + p.getNumero() + " esta sendo feito pelo cozinheiro: " + this.getName());
                 Thread.sleep(tempoPreparo);
-                System.out.println("Saindo Pedido: " + p.getNumero());
+                System.out.println("\nO pedido nº: " + p.getNumero() + " foi finalizado pelo cozinheiro " + this.getName());
+
+                System.out.println("\nFila de pedidos: " + pedidos);
             }
         } catch (Exception e) {
             e.printStackTrace();

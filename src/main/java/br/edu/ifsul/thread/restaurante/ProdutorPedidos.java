@@ -6,14 +6,12 @@ import java.util.concurrent.BlockingQueue;
 
 public class ProdutorPedidos extends Thread {
     private BlockingQueue<Pedido> pedidos = null;
-    private Boolean pedidosSendoFeitos = false;
     private Cardapio cardapio = new Cardapio();
     private ArrayList<Prato> pratosDoDia = new ArrayList<>();
     private String menu = "";
 
-    public ProdutorPedidos(BlockingQueue pedidos, Boolean pedidosSendoFeitos) {
+    public ProdutorPedidos(BlockingQueue pedidos) {
         this.pedidos = pedidos;
-        this.pedidosSendoFeitos = pedidosSendoFeitos;
     }
 
     @Override
@@ -23,16 +21,16 @@ public class ProdutorPedidos extends Thread {
             montaMenu();
             int cont = 0;
 
-            while (this.pedidosSendoFeitos) {
+            do {
                 cont++;
-                p = new Pedido();
                 p = montaPedido();
-                if (p != null) {
+                if (p.getNumero() == null) {
                     p.setNumero(cont);
                     pedidos.put(p);
+                } else {
+                    pedidos.put(p);
                 }
-            }
-
+            } while (p.getNumero() != 0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,8 +47,8 @@ public class ProdutorPedidos extends Thread {
         } while (!texto.equals("0") && !texto.equals("1"));
 
         if (texto.equals("0")) {
-            this.pedidosSendoFeitos = false;
-            return null;
+            p.setNumero(0);
+            return p;
         } else {
             texto = JOptionPane.showInputDialog(this.menu);
             pratosDoPedido.add(pratosDoDia.get(Integer.parseInt(texto)-1));
@@ -68,7 +66,6 @@ public class ProdutorPedidos extends Thread {
                     prato.getPreco() + "\n";
         }
 
-        menu += "\n\nDigite o prato que você deseja: ";
+        menu += "\n\nInforme o prato que você deseja: ";
     }
-
 }
