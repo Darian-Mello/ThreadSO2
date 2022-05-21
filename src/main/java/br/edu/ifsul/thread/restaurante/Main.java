@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class Main {
     public static void main(String[] args) {
-        BlockingQueue<Pedido> pedidos = new ArrayBlockingQueue<>(2);
+        BlockingQueue<Pedido> pedidos = new ArrayBlockingQueue<>(3);
 
         ProdutorPedidos produtor = new ProdutorPedidos(pedidos);
 
@@ -18,6 +18,5 @@ public class Main {
         produtor.start();
         consumidor.start();
         consumidor2.start();
-
     }
 }

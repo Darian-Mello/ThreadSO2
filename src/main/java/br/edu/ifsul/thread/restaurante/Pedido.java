@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Pedido implements Serializable {
-    private Cozinheiro cliente;
     private ArrayList<Prato> pratos;
     private Calendar hora;
     private Integer numero;
@@ -20,14 +19,6 @@ public class Pedido implements Serializable {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
-    }
-
-    public Cozinheiro getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cozinheiro cliente) {
-        this.cliente = cliente;
     }
 
     public ArrayList<Prato> getPratos() {

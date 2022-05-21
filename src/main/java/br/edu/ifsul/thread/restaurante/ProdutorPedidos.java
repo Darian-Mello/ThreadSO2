@@ -1,14 +1,13 @@
 package br.edu.ifsul.thread.restaurante;
 
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class ProdutorPedidos extends Thread {
     private BlockingQueue<Pedido> pedidos = null;
     private Cardapio cardapio = new Cardapio();
-    private ArrayList<Prato> pratosDoDia = new ArrayList<>();
-    private String menu = "";
 
     public ProdutorPedidos(BlockingQueue pedidos) {
         this.pedidos = pedidos;
@@ -18,54 +17,43 @@ public class ProdutorPedidos extends Thread {
     public void run() {
         try {
             Pedido p;
-            montaMenu();
-            int cont = 0;
-
-            do {
-                cont++;
+            mostraPratos();
+            for (int i = 1; i <= 8; i++) {
                 p = montaPedido();
-                if (p.getNumero() == null) {
-                    p.setNumero(cont);
-                    pedidos.put(p);
-                } else {
-                    pedidos.put(p);
-                }
-            } while (p.getNumero() != 0);
+                p.setHora(Calendar.getInstance());
+                p.setNumero(i);
+
+                pedidos.put(p);
+                System.out.println("\nPedido nº " + i + " foi inserido na fila, seus pratos: " +
+                    p.getPratos().get(0).getNome() + ", " + p.getPratos().get(1).getNome() + ", " + p.getPratos().get(2).getNome() + ";");
+
+                TimeUnit.SECONDS.sleep(1);
+            }
+            p = new Pedido();
+            p.setNumero(0);
+            pedidos.put(p);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Pedido montaPedido () throws InterruptedException {
+    public Pedido montaPedido () throws Exception {
         Pedido p = new Pedido();
-        String texto;
         ArrayList<Prato> pratosDoPedido = new ArrayList<>();
-        Integer numeroPrato;
 
-        do {
-            texto = JOptionPane.showInputDialog("Deseja fazer um pedido (0 - Sair, 1 - Sim)? ");
-        } while (!texto.equals("0") && !texto.equals("1"));
-
-        if (texto.equals("0")) {
-            p.setNumero(0);
-            return p;
-        } else {
-            texto = JOptionPane.showInputDialog(this.menu);
-            pratosDoPedido.add(pratosDoDia.get(Integer.parseInt(texto)-1));
-            p.setPratos(pratosDoPedido);
-
-            return p;
+        for (int i = 0; i < 3; i++) {
+            pratosDoPedido.add(cardapio.getPratos().get((int)Math.floor(Math.random() * cardapio.getPratos().size())));
         }
+        p.setPratos(pratosDoPedido);
+
+        return p;
     }
 
-    public void montaMenu () {
-        this.pratosDoDia = cardapio.getPratos();
-        this.menu = "Pratos do dia:\n\n";
-        for (Prato prato: this.pratosDoDia) {
-            this.menu += prato.getNumero() + " - " + prato.getNome() + " - Tempo de preparo: " + prato.getTempoPreparo()  + " - Preço: " +
-                    prato.getPreco() + "\n";
+    public void mostraPratos () {
+        System.out.println("Pratos do dia:");
+        for (Prato prato: cardapio.getPratos()) {
+            System.out.println( prato.getNumero() + " - " + prato.getNome() + " - Tempo de preparo: " + prato.getTempoPreparo()  + "s - Preço: " +
+                    prato.getPreco());
         }
-
-        menu += "\n\nInforme o prato que você deseja: ";
     }
 }
