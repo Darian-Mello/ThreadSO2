@@ -48,7 +48,7 @@ public class ConsumidorPedidos extends Thread {
     public void prepararPedido (Integer tempoPreparo) throws Exception {
         for(int i=1; i <= tempoPreparo ; i++){
             TimeUnit.SECONDS.sleep(1);
-            //System.out.println( "" + this.getName() + ", " + i + "/" + tempo + "s;" );
+            //System.out.println( "" + this.getName() + ", " + i + "/" + tempoPreparo + "s;" );
         }
     }
 }
