@@ -2,11 +2,14 @@ package br.edu.ifsul.thread.restaurante;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 
+/**
+ * Tal classe cria um Array onde serão armazenados todos os pedidos.
+ * Cada pedido recebe um numero (id).
+ * @author Dariãn e Elias
+ */
 public class Pedido implements Serializable {
     private ArrayList<Prato> pratos;
-    private Calendar hora;
     private Integer numero;
 
     public Pedido () {
@@ -27,13 +30,5 @@ public class Pedido implements Serializable {
 
     public void setPratos(ArrayList<Prato> pratos) {
         this.pratos = pratos;
-    }
-
-    public Calendar getHora() {
-        return hora;
-    }
-
-    public void setHora(Calendar hora) {
-        this.hora = hora;
     }
 }

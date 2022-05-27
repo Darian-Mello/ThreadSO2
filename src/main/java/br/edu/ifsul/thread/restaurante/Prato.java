@@ -2,10 +2,14 @@ package br.edu.ifsul.thread.restaurante;
 
 import java.io.Serializable;
 
+/**
+ * Tal classe contém as variáveis utilizadas para cada prato.
+ * Cada prato recebe um nome, valor, tempo de preparo e numero (id).
+ * @author Dariãn e Elias
+ */
 public class Prato implements Serializable {
     private String nome;
     private Integer tempoPreparo;
-    private String ingredientes;
     private Double Preco;
     private Integer numero;
 
@@ -27,14 +31,6 @@ public class Prato implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getIngredientes() {
-        return ingredientes;
-    }
-
-    public void setIngredientes(String ingredientes) {
-        this.ingredientes = ingredientes;
     }
 
     public Double getPreco() {
